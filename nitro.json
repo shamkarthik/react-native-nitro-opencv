@@ -1,0 +1,23 @@
+{
+  "$schema": "https://nitro.margelo.com/nitro.schema.json",
+  "cxxNamespace": [
+    "nitroopencv"
+  ],
+  "ios": {
+    "iosModuleName": "NitroOpencv"
+  },
+  "android": {
+    "androidNamespace": [
+      "nitroopencv"
+    ],
+    "androidCxxLibName": "NitroOpencv"
+  },
+  "autolinking": {
+    "NitroOpencv": {
+      "cpp": "HybridNitroOpencv"
+    }
+  },
+  "ignorePaths": [
+    "**/node_modules"
+  ]
+}
