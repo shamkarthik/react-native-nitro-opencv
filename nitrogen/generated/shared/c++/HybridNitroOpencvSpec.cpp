@@ -15,6 +15,7 @@ namespace margelo::nitro::nitroopencv {
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
       prototype.registerHybridMethod("sum", &HybridNitroOpencvSpec::sum);
+      prototype.registerHybridMethod("grayScaleImage", &HybridNitroOpencvSpec::grayScaleImage);
     });
   }
 

@@ -15,7 +15,7 @@
 
 
 
-
+#include <string>
 
 namespace margelo::nitro::nitroopencv {
 
@@ -49,6 +49,7 @@ namespace margelo::nitro::nitroopencv {
     public:
       // Methods
       virtual double sum(double num1, double num2) = 0;
+      virtual std::string grayScaleImage(const std::string& imagePath) = 0;
 
     protected:
       // Hybrid Setup

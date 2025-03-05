@@ -8,5 +8,6 @@ class HybridNitroOpencv : public HybridNitroOpencvSpec {
         HybridNitroOpencv() : HybridObject(TAG), HybridNitroOpencvSpec() {}
        
         double sum(double a, double b) override;
+        std::string grayScaleImage(const std::string& imagePath) override;
     };
 } // namespace margelo::nitro::nitroopencv

@@ -79,3 +79,4 @@ tsconfig.tsbuildinfo
 # third party library
 cpp/opencv-4.11.0*
 cpp/oceancv
+external/
