@@ -11,7 +11,7 @@ import {
 import { NitroOpencv } from 'react-native-nitro-opencv';
 import { ImageLibraryOptions, launchImageLibrary } from 'react-native-image-picker';
 
-function App(): React.JSX.Element {
+function GalleryUpload(): React.JSX.Element {
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [grayScaleImage, setGrayScaleImage] = useState<string | null>('');
 
@@ -22,7 +22,7 @@ function App(): React.JSX.Element {
           PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
           {
             title: 'External Storage Permission',
-            message: 'App needs access to your storage to read images.',
+            message: 'GalleryUpload needs access to your storage to read images.',
             buttonNeutral: 'Ask Me Later',
             buttonNegative: 'Cancel',
             buttonPositive: 'OK',
@@ -107,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default GalleryUpload;
