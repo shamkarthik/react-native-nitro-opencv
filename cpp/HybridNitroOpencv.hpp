@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "HybridNitroOpencvSpec.hpp"
+#include <opencv2/opencv.hpp>
 
 namespace margelo::nitro::nitroopencv {
 class HybridNitroOpencv : public HybridNitroOpencvSpec {
