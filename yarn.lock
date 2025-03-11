@@ -6134,13 +6134,13 @@ new-github-release-url@2.0.0:
   dependencies:
     type-fest "^2.5.1"
 
-nitro-codegen@^0.24.1:
-  version "0.24.1"
-  resolved "https://registry.npmjs.org/nitro-codegen/-/nitro-codegen-0.24.1.tgz"
-  integrity sha512-sYDeUD+SJ5u96KjlAR/9++Iutl1aQjyoXXchgAmLOJvbhaGwq5Qhjp5dLPkMZHlLAn65C1gdqXMc2s1N7anp/w==
+nitro-codegen@^0.25.1:
+  version "0.25.1"
+  resolved "https://registry.yarnpkg.com/nitro-codegen/-/nitro-codegen-0.25.1.tgz#4975b7a1a843185812cdfbda2e0ad9d5934db201"
+  integrity sha512-rceqEJ+JMRY+KylMDTDf8q0bkc9mPx++sAT5mGNVyV/zBtI80UJyk/IQGi+CBjMbsHCtfH4d5Lq7EYyMo9SUmw==
   dependencies:
     chalk "^5.3.0"
-    react-native-nitro-modules "^0.24.1"
+    react-native-nitro-modules "^0.25.1"
     ts-morph "^25.0.0"
     yargs "^17.7.2"
     zod "^3.23.8"
@@ -6860,6 +6860,11 @@ react-native-nitro-modules@^0.24.1:
   version "0.24.1"
   resolved "https://registry.npmjs.org/react-native-nitro-modules/-/react-native-nitro-modules-0.24.1.tgz"
   integrity sha512-wA04fykLsIObAd/2h0mfl3CGZ7Iqtj9CjnHD9j+yAnMCcYDWYlCV8MICmicWgN6eg4yjrEUDsrfFAYWgCFiCBw==
+
+react-native-nitro-modules@^0.25.1:
+  version "0.25.1"
+  resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.25.1.tgz#d38549c62ae75231aaa99a907e0e3fbac5505df4"
+  integrity sha512-iaMoHOFq3NpBdEtZSieqjqncHWmNsg9yTdTxmsBXKergmCMc7wZ2bLLcDhp3y+az3eVph7uttjG3T4WqNhElOg==
 
 react-native-reanimated@^3.17.1:
   version "3.17.1"
