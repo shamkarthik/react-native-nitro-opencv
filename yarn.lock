@@ -6861,6 +6861,11 @@ react-native-nitro-modules@^0.24.1:
   resolved "https://registry.npmjs.org/react-native-nitro-modules/-/react-native-nitro-modules-0.24.1.tgz"
   integrity sha512-wA04fykLsIObAd/2h0mfl3CGZ7Iqtj9CjnHD9j+yAnMCcYDWYlCV8MICmicWgN6eg4yjrEUDsrfFAYWgCFiCBw==
 
+react-native-nitro-modules@^0.25.1:
+  version "0.25.1"
+  resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.25.1.tgz#d38549c62ae75231aaa99a907e0e3fbac5505df4"
+  integrity sha512-iaMoHOFq3NpBdEtZSieqjqncHWmNsg9yTdTxmsBXKergmCMc7wZ2bLLcDhp3y+az3eVph7uttjG3T4WqNhElOg==
+
 react-native-reanimated@^3.17.1:
   version "3.17.1"
   resolved "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-3.17.1.tgz"
