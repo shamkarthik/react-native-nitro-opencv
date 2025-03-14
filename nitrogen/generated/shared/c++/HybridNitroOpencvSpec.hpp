@@ -50,10 +50,13 @@ namespace margelo::nitro::nitroopencv {
 
     public:
       // Methods
+      virtual bool initializeBuffer(const std::shared_ptr<ArrayBuffer>& buffer, double width, double height) = 0;
       virtual std::shared_ptr<ArrayBuffer> nativeGrayScale(const std::shared_ptr<ArrayBuffer>& frameData, double width, double height) = 0;
       virtual double sum(double num1, double num2) = 0;
       virtual std::string grayScaleImage(const std::string& imagePath) = 0;
       virtual std::shared_ptr<ArrayBuffer> getRGBABuffer(const std::shared_ptr<ArrayBuffer>& buffer, double width, double height) = 0;
+      virtual std::shared_ptr<ArrayBuffer> getRGBABufferFromStored() = 0;
+      virtual void releaseStoredBuffer() = 0;
 
     protected:
       // Hybrid Setup

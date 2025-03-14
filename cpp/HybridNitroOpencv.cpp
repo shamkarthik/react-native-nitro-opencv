@@ -2,31 +2,41 @@
 #include <string>
 #include <android/log.h>
 #include <memory>
+#include <opencv2/opencv.hpp>
 
 namespace margelo::nitro::nitroopencv {
 
-#define TAG "NitroOpencv-JNI"
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
 
+    HybridNitroOpencv::HybridNitroOpencv()
+            : HybridObject(TAG), HybridNitroOpencvSpec() {
+        LOGD("HybridNitroOpencv::HybridNitroOpencv()");
+    }
+
+    HybridNitroOpencv::~HybridNitroOpencv() {
+        LOGD("HybridNitroOpencv::~HybridNitroOpencv()");
+        releaseStoredBuffer();
+    }
+
     double HybridNitroOpencv::sum(double a, double b) {
+        LOGD("HybridNitroOpencv::sum(%f, %f)", a, b);
         return a + b;
     }
 
+// ✅ Example grayscale image processor from file path (no changes here)
     std::string HybridNitroOpencv::grayScaleImage(const std::string &imagePath) {
-        std::string processedImagePath = imagePath; // Start with the original path
+        LOGD("HybridNitroOpencv::grayScaleImage(%s)", imagePath.c_str());
+        std::string processedImagePath = imagePath;
 
-        // Check if the path starts with "file://" and remove it if it does.
         if (imagePath.rfind("file://", 0) == 0) {
-            processedImagePath = imagePath.substr(7); // Remove "file://" (7 characters)
-            __android_log_print(ANDROID_LOG_DEBUG, TAG, "Removed 'file://' prefix. Path is now: %s", processedImagePath.c_str());
-        } else {
-            __android_log_print(ANDROID_LOG_DEBUG, TAG, "Path does not have 'file://' prefix: %s", imagePath.c_str());
+            processedImagePath = imagePath.substr(7);
+            LOGD("Removed 'file://' prefix. Path is now: %s", processedImagePath.c_str());
         }
 
         cv::Mat image = cv::imread(processedImagePath);
         if (image.empty()) {
-            __android_log_print(ANDROID_LOG_ERROR, TAG, "cv::imread failed to load image: %s", processedImagePath.c_str());
+            LOGE("cv::imread failed to load image: %s", processedImagePath.c_str());
             return "";
         }
 
@@ -34,111 +44,169 @@ namespace margelo::nitro::nitroopencv {
         cv::cvtColor(image, grayImage, cv::COLOR_BGR2GRAY);
 
         std::string grayImagePath = processedImagePath + "_gray.jpg";
-        cv::imwrite(grayImagePath, grayImage);
-
-        if (!cv::haveImageReader(grayImagePath)) {
-            __android_log_print(ANDROID_LOG_ERROR, TAG, "cv::haveImageReader failed for: %s", grayImagePath.c_str());
+        if (!cv::imwrite(grayImagePath, grayImage)) {
+            LOGE("Failed to write grayscale image to: %s", grayImagePath.c_str());
             return "";
         }
 
         return "file://" + grayImagePath;
     }
 
-    std::shared_ptr<ArrayBuffer>
-    HybridNitroOpencv::nativeGrayScale(const std::shared_ptr<ArrayBuffer> &frameData, double width, double height) {
-        LOGD("nativeConvertToRGBA: start");
-    
+    std::shared_ptr<ArrayBuffer> HybridNitroOpencv::nativeGrayScale(
+            const std::shared_ptr<ArrayBuffer> &frameData, double width, double height) {
+
+        LOGD("HybridNitroOpencv::nativeGrayScale: start");
+
         int w = static_cast<int>(width);
         int h = static_cast<int>(height);
-    
-        if (w <= 0 || h <= 0) {
-            LOGE("Invalid dimensions: width %d height %d", w, h);
+
+        if (w <= 0 || h <= 0 || !frameData || !frameData->data()) {
+            LOGE("nativeGrayScale: Invalid input - width=%d, height=%d", w, h);
             return nullptr;
         }
-    
-        // Create a YUV Mat from NV21 frame data.
+
+        // ✅ YUV NV21 data buffer
         cv::Mat yuv(h + h / 2, w, CV_8UC1, frameData->data());
-    
-        // Convert YUV ➡️ RGBA.
+        LOGD("nativeGrayScale: yuvMat rows=%d cols=%d", yuv.rows, yuv.cols);
+
+        // ✅ Convert YUV -> RGBA
         cv::Mat rgba;
         cv::cvtColor(yuv, rgba, cv::COLOR_YUV2RGBA_NV21);
-    
-        if (!rgba.isContinuous()) {
-            rgba = rgba.clone();
-        }
-    
-        size_t newSize = rgba.total() * rgba.elemSize();
-        LOGD("nativeConvertToRGBA: converted to RGBA with size %zu", newSize);
-    
-        std::shared_ptr<ArrayBuffer> newBuffer = ArrayBuffer::allocate(newSize);
-        if (!newBuffer || !newBuffer->data()) {
-            LOGE("Failed to allocate new ArrayBuffer of size %zu", newSize);
+
+        if (rgba.empty()) {
+            LOGE("nativeGrayScale: cvtColor failed");
             return nullptr;
         }
-    
+
+        if (!rgba.isContinuous()) {
+            rgba = rgba.clone();
+            LOGD("nativeGrayScale: Cloned to make continuous");
+        }
+
+        size_t newSize = rgba.total() * rgba.elemSize();
+        LOGD("nativeGrayScale: newSize=%zu", newSize);
+
+        auto newBuffer = ArrayBuffer::allocate(newSize);
+        if (!newBuffer || !newBuffer->data()) {
+            LOGE("nativeGrayScale: Failed to allocate ArrayBuffer");
+            return nullptr;
+        }
+
         memcpy(newBuffer->data(), rgba.data, newSize);
-    
-        LOGD("nativeConvertToRGBA: end");
+
+        LOGD("HybridNitroOpencv::nativeGrayScale: end");
         return newBuffer;
     }
 
-    std::shared_ptr<ArrayBuffer>
-    HybridNitroOpencv::getRGBABuffer(const std::shared_ptr<ArrayBuffer> &buffer, double originalWidth, double originalHeight) {
+    std::shared_ptr<ArrayBuffer> HybridNitroOpencv::getRGBABuffer(
+            const std::shared_ptr<ArrayBuffer> &buffer, double originalWidth, double originalHeight) {
 
-//        clean the buffer
-//        jsi::Object thisObject = thisArg.asObject(runtime);
-//        thisObject.setNativeState(runtime, nullptr);
-        LOGD("getRGBABuffer: start");
-        // Check if the input buffer is valid.
-        if (!buffer || !buffer->data() || buffer->size() <= 0) {
-            LOGE("getRGBABuffer: invalid input buffer");
+        LOGD("HybridNitroOpencv::getRGBABuffer: start");
+
+        if (!initializeBuffer(buffer, originalWidth, originalHeight)) {
+            LOGE("getRGBABuffer: Buffer initialization failed");
             return nullptr;
         }
-        //use original width, original height
-        int width = static_cast<int>(originalWidth);
-        int height = static_cast<int>(originalHeight);
-        // Assuming NV21 format for the input buffer.
-        // For NV21, the total size is width * height * 1.5
-        // Create a cv::Mat object from the input buffer, interpreting it as NV21 format.
-        cv::Mat yuv(height + height / 2, width, CV_8UC1, const_cast<unsigned char*>(buffer->data()));
 
-        // Create an empty cv::Mat object to store the RGBA image.
-        cv::Mat rgba;
-        // Convert the YUV image to RGBA format.
-        cv::cvtColor(yuv, rgba, cv::COLOR_YUV2RGBA_NV21);
-        // Release the memory occupied by the YUV image.
-        yuv.release(); 
+        return getRGBABufferFromStored();
+    }
 
-        // Check if the RGBA image is continuous in memory.
-        if (!rgba.isContinuous()) {
-            // If not continuous, clone the image to make it continuous.
-            cv::Mat temp = rgba.clone();
-            // Release the memory occupied by the original non-continuous RGBA image.
-            rgba.release(); 
-            // Assign the continuous clone to the RGBA variable.
-            rgba = temp;
-        }
+    std::shared_ptr<ArrayBuffer> HybridNitroOpencv::getRGBABufferFromStored() {
+        LOGD("HybridNitroOpencv::getRGBABufferFromStored: start");
 
-        // Calculate the size of the RGBA image in bytes.
-        size_t rgbaSize = rgba.total() * rgba.elemSize();
-        // Allocate a new ArrayBuffer to store the RGBA image data.
-        std::shared_ptr<ArrayBuffer> rgbaBuffer = ArrayBuffer::allocate(rgbaSize);
-        // Check if the allocation was successful.
-        if (!rgbaBuffer || !rgbaBuffer->data()) {
-            LOGE("getRGBABuffer: failed to allocate RGBA buffer of size %zu", rgbaSize);
+        if (yuvMat.empty()) {
+            LOGE("getRGBABufferFromStored: yuvMat is empty");
             return nullptr;
         }
-        // Copy the RGBA image data to the newly allocated ArrayBuffer.
-        memcpy(rgbaBuffer->data(), rgba.data, rgbaSize);
-        // Release the memory occupied by the RGBA image.
-        rgba.release();
-        LOGD("getRGBABuffer: end, size: %zu", rgbaSize);
 
-        // clean the buffer
-        
+        // ✅ Convert YUV to RGBA
+        cv::cvtColor(yuvMat, rgbaMat, cv::COLOR_YUV2RGBA_NV21);
 
-        // Return the ArrayBuffer containing the RGBA image data.
+        if (rgbaMat.empty()) {
+            LOGE("getRGBABufferFromStored: cvtColor failed");
+            return nullptr;
+        }
+
+        if (!rgbaMat.isContinuous()) {
+            rgbaMat = rgbaMat.clone();
+            LOGD("getRGBABufferFromStored: Cloned to make continuous");
+        }
+
+        size_t rgbaSize = rgbaMat.total() * rgbaMat.elemSize();
+        LOGD("getRGBABufferFromStored: rgbaSize=%zu (expected: %d)", rgbaSize, bufferWidth * bufferHeight * 4);
+
+        if (rgbaSize != bufferWidth * bufferHeight * 4) {
+            LOGE("getRGBABufferFromStored: Unexpected rgbaSize!");
+        }
+
+        // ✅ Allocate rgbaBuffer if necessary
+        if (!rgbaBuffer || rgbaBuffer->size() != rgbaSize) {
+            rgbaBuffer = ArrayBuffer::allocate(rgbaSize);
+            if (!rgbaBuffer || !rgbaBuffer->data()) {
+                LOGE("getRGBABufferFromStored: Failed to allocate rgbaBuffer");
+                return nullptr;
+            }
+        }
+
+        // ✅ Copy to output buffer
+        memcpy(rgbaBuffer->data(), rgbaMat.data, rgbaSize);
+
+        LOGD("getRGBABufferFromStored: end");
         return rgbaBuffer;
     }
 
-} // namespace margelo::nitro::nitroopencv
+    bool HybridNitroOpencv::initializeBuffer(
+            const std::shared_ptr<ArrayBuffer> &buffer, double width, double height) {
+
+        LOGD("HybridNitroOpencv::initializeBuffer: start");
+
+        int w = static_cast<int>(width);
+        int h = static_cast<int>(height);
+
+        if (!buffer || w <= 0 || h <= 0) {
+            LOGE("initializeBuffer: Invalid dimensions");
+            releaseStoredBuffer();
+            return false;
+        }
+
+        size_t expectedBufferSize = static_cast<size_t>(w * h * 1.5);
+        LOGD("initializeBuffer: expectedBufferSize=%zu", expectedBufferSize);
+
+        if (buffer->size() < expectedBufferSize) {
+            LOGE("initializeBuffer: Buffer size (%zu) < expected (%zu)", buffer->size(), expectedBufferSize);
+            releaseStoredBuffer();
+            return false;
+        }
+
+        releaseStoredBuffer();
+
+        bufferPtr = buffer;
+        bufferWidth = w;
+        bufferHeight = h;
+        bufferSize = buffer->size();
+
+        // ✅ Correct YUV Mat: rows = height + height/2, cols = width
+        yuvMat = cv::Mat(h + h / 2, w, CV_8UC1, bufferPtr->data());
+
+        LOGD("initializeBuffer: Initialized yuvMat (cols=%d rows=%d)", yuvMat.cols, yuvMat.rows);
+
+        return true;
+    }
+
+    void HybridNitroOpencv::releaseStoredBuffer() {
+        LOGD("HybridNitroOpencv::releaseStoredBuffer: start");
+
+        yuvMat.release();
+        rgbaMat.release();
+
+        bufferPtr.reset();
+        rgbaBuffer.reset();
+
+        bufferSize = 0;
+        bufferWidth = 0;
+        bufferHeight = 0;
+
+        LOGD("HybridNitroOpencv::releaseStoredBuffer: end");
+    }
+
+} // namespace margelo::nitro::nitroop

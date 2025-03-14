@@ -14,10 +14,13 @@ namespace margelo::nitro::nitroopencv {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
+      prototype.registerHybridMethod("initializeBuffer", &HybridNitroOpencvSpec::initializeBuffer);
       prototype.registerHybridMethod("nativeGrayScale", &HybridNitroOpencvSpec::nativeGrayScale);
       prototype.registerHybridMethod("sum", &HybridNitroOpencvSpec::sum);
       prototype.registerHybridMethod("grayScaleImage", &HybridNitroOpencvSpec::grayScaleImage);
       prototype.registerHybridMethod("getRGBABuffer", &HybridNitroOpencvSpec::getRGBABuffer);
+      prototype.registerHybridMethod("getRGBABufferFromStored", &HybridNitroOpencvSpec::getRGBABufferFromStored);
+      prototype.registerHybridMethod("releaseStoredBuffer", &HybridNitroOpencvSpec::releaseStoredBuffer);
     });
   }
 
