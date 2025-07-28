@@ -6134,16 +6134,16 @@ new-github-release-url@2.0.0:
   dependencies:
     type-fest "^2.5.1"
 
-nitro-codegen@^0.24.1:
-  version "0.24.1"
-  resolved "https://registry.npmjs.org/nitro-codegen/-/nitro-codegen-0.24.1.tgz"
-  integrity sha512-sYDeUD+SJ5u96KjlAR/9++Iutl1aQjyoXXchgAmLOJvbhaGwq5Qhjp5dLPkMZHlLAn65C1gdqXMc2s1N7anp/w==
+nitro-codegen@^0.27.2:
+  version "0.27.2"
+  resolved "https://registry.yarnpkg.com/nitro-codegen/-/nitro-codegen-0.27.2.tgz#86a45a31c3778fb28951c2818fc443bae4802fde"
+  integrity sha512-8s47CFGu2QYvqbKacmtpowgcj577fX60pxFiIDHyM0scT8u28thwAmy6ByskCySHiLFDO7OX6yVT+TrJHc6rQQ==
   dependencies:
     chalk "^5.3.0"
-    react-native-nitro-modules "^0.24.1"
+    react-native-nitro-modules "^0.27.2"
     ts-morph "^25.0.0"
     yargs "^17.7.2"
-    zod "^3.23.8"
+    zod "^4.0.5"
 
 nocache@^3.0.1:
   version "3.0.4"
@@ -6860,6 +6860,11 @@ react-native-nitro-modules@^0.24.1:
   version "0.24.1"
   resolved "https://registry.npmjs.org/react-native-nitro-modules/-/react-native-nitro-modules-0.24.1.tgz"
   integrity sha512-wA04fykLsIObAd/2h0mfl3CGZ7Iqtj9CjnHD9j+yAnMCcYDWYlCV8MICmicWgN6eg4yjrEUDsrfFAYWgCFiCBw==
+
+react-native-nitro-modules@^0.27.2:
+  version "0.27.2"
+  resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.27.2.tgz#1394c50096f55d3ef9da612299eb48ffb45bc572"
+  integrity sha512-wHUs6m4e1MkhV7oPMNSZwCZcoaepLNfPScc+Pm9pwgtv26sTADXnu66MzyodSl6kO6TcTC1Pf+5VyQMgesx08w==
 
 react-native-reanimated@^3.17.1:
   version "3.17.1"
@@ -8393,7 +8398,7 @@ yoctocolors@^2.0.0:
   resolved "https://registry.npmjs.org/yoctocolors/-/yoctocolors-2.1.1.tgz"
   integrity sha512-GQHQqAopRhwU8Kt1DDM8NjibDXHC8eoh1erhGAJPEyveY9qqVeXvVikNKrDz69sHowPMorbPUrH/mx8c50eiBQ==
 
-zod@^3.23.8:
-  version "3.24.2"
-  resolved "https://registry.npmjs.org/zod/-/zod-3.24.2.tgz"
-  integrity sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==
+zod@^4.0.5:
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.0.10.tgz#b609ee8807c1fe6a9d8beec2be51220cc7a8f0ca"
+  integrity sha512-3vB+UU3/VmLL2lvwcY/4RV2i9z/YU0DTV/tDuYjrwmx5WeJ7hwy+rGEEx8glHp6Yxw7ibRbKSaIFBgReRPe5KA==
