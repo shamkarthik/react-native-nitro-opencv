@@ -6134,16 +6134,16 @@ new-github-release-url@2.0.0:
   dependencies:
     type-fest "^2.5.1"
 
-nitro-codegen@^0.24.1:
-  version "0.24.1"
-  resolved "https://registry.npmjs.org/nitro-codegen/-/nitro-codegen-0.24.1.tgz"
-  integrity sha512-sYDeUD+SJ5u96KjlAR/9++Iutl1aQjyoXXchgAmLOJvbhaGwq5Qhjp5dLPkMZHlLAn65C1gdqXMc2s1N7anp/w==
+nitro-codegen@^0.29.0:
+  version "0.29.0"
+  resolved "https://registry.yarnpkg.com/nitro-codegen/-/nitro-codegen-0.29.0.tgz#6a56def7f2af8f3a37c30a2f160c72e74125a380"
+  integrity sha512-Q3v+DRasXc9+9u40zXGylNe8D035Oxn2L/PI5jEesgnUWYKOH7CQdgUNS3n6MVdYvU2AIKhqtzBQMZYGRascaA==
   dependencies:
     chalk "^5.3.0"
-    react-native-nitro-modules "^0.24.1"
+    react-native-nitro-modules "^0.29.0"
     ts-morph "^25.0.0"
     yargs "^17.7.2"
-    zod "^3.23.8"
+    zod "^4.0.5"
 
 nocache@^3.0.1:
   version "3.0.4"
@@ -6860,6 +6860,11 @@ react-native-nitro-modules@^0.24.1:
   version "0.24.1"
   resolved "https://registry.npmjs.org/react-native-nitro-modules/-/react-native-nitro-modules-0.24.1.tgz"
   integrity sha512-wA04fykLsIObAd/2h0mfl3CGZ7Iqtj9CjnHD9j+yAnMCcYDWYlCV8MICmicWgN6eg4yjrEUDsrfFAYWgCFiCBw==
+
+react-native-nitro-modules@^0.29.0:
+  version "0.29.0"
+  resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.29.0.tgz#251ae54c65e0cbe082542c2b21db72abd551f5ef"
+  integrity sha512-wPEMwW8XZAHALsiakxvfu1Rdgpkx/M2PIxIOYQ9GSTSPkMndL1BA0zJ9/ussB+IZqXHFcsFmksBiG7+E/vBJoA==
 
 react-native-reanimated@^3.17.1:
   version "3.17.1"
@@ -8393,7 +8398,7 @@ yoctocolors@^2.0.0:
   resolved "https://registry.npmjs.org/yoctocolors/-/yoctocolors-2.1.1.tgz"
   integrity sha512-GQHQqAopRhwU8Kt1DDM8NjibDXHC8eoh1erhGAJPEyveY9qqVeXvVikNKrDz69sHowPMorbPUrH/mx8c50eiBQ==
 
-zod@^3.23.8:
-  version "3.24.2"
-  resolved "https://registry.npmjs.org/zod/-/zod-3.24.2.tgz"
-  integrity sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==
+zod@^4.0.5:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.1.4.tgz#b65b21c825af6f301d36b3d6bdbbd9b0c8a7c831"
+  integrity sha512-2YqJuWkU6IIK9qcE4k1lLLhyZ6zFw7XVRdQGpV97jEIZwTrscUw+DY31Xczd8nwaoksyJUIxCojZXwckJovWxA==
